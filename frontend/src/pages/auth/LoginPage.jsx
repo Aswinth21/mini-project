@@ -7,6 +7,21 @@ import { MdPassword } from "react-icons/md";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+
+const logoutButton = async () => {
+    try{
+      const res = await fetch("/api/v1/auth/logout", {
+        method: "POST",
+      });
+      const data = await res.json();
+      console.log(data);
+    }
+    catch(error){
+      console.error(error);
+    }
+  }
+
+
 const LoginPage = () => {
   const [formData, setFormData] = useState({
 		username: "",
@@ -91,6 +106,7 @@ const LoginPage = () => {
 						<button className='btn rounded-full btn-primary text-white btn-outline w-full'>Sign up</button>
 					</Link>
 				</div>
+				<button onClick={logoutButton}>Logout</button>
 			</div>
 		</div>
   )

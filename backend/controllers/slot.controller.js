@@ -4,7 +4,7 @@ import User from "../models/user.model.js";
 
 export const bookSlot = async (req, res) => {
     try{
-        const {exam, courseCode, courseName, macID, roomNumber, Date, slot} = req.body;
+        const {userId,username, exam, courseCode, courseName, macID, roomId, roomNumber, Date, slot} = req.body;
         const user = await User.findById(userId);
         if(!user) {
             return res.status(404).json({message: "User not found"});
@@ -15,10 +15,12 @@ export const bookSlot = async (req, res) => {
         }
         const slotBooking = new SlotBooking({
             userId: userId,
+            username,
             exam,
             courseCode,
             courseName,
             macID,
+            roomId,
             roomNumber,
             Date,
             slot
@@ -32,7 +34,7 @@ export const bookSlot = async (req, res) => {
 }
 export const editSlot = async (req, res) => {
     try{
-        const {userId, exam, courseCode, courseName, macID, roomNumber, Date,slot} = req.body;
+        const {userId, exam, courseCode, courseName, macID,roomId, roomNumber, Date,slot} = req.body;
         const user = await User.findById(userId);
         if(!user) {
             return res.status(404).json({message: "User not found"});
@@ -42,6 +44,7 @@ export const editSlot = async (req, res) => {
             courseCode,
             courseName,
             macID,
+            roomId,
             roomNumber,
             Date,
             slot

@@ -22,7 +22,7 @@ const RoomSelection = ({ onRoomSelect }) => {
     <div>
       <h1>Select a Room</h1>
       {rooms.map((room, index) => (
-        <button key={index} onClick={() => onRoomSelect(room.roomNumber)}>
+        <button key={index} onClick={() => onRoomSelect({ roomId: room._id, roomNumber: room.roomNumber })}>
           {room.roomNumber}
         </button>
       ))}

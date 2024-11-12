@@ -26,9 +26,14 @@ export const editRoom = async (req, res) => {
 
 export const closeRoom = async (req, res) => {
     try {
-        const room = await Room.findByIdAndUpdate(req.params.id, {isClosed: true});
-        res.status(200).json(room);
-        console.log("success");
+        const {roomId} = req.body;
+        const isRoom = await Room.findById(roomId);
+        if(isRoom){
+            const room = await Room.findByIdAndUpdate(roomId, {isClosed: true});
+            res.status(200).json(room);
+            console.log("success");
+        }
+        
     }
     catch (error) {
         res.status(500).json({message: error.message});

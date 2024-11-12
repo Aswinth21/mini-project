@@ -1,10 +1,14 @@
 import mongoose from "mongoose";
 
 const slotSchema = new mongoose.Schema({
+    userId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        required: true, 
+        ref: 'User' 
+    },
     username: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-       required: true
+        type: String,
+        required: true
     }, 
     exam: {
         type: String,
@@ -22,9 +26,13 @@ const slotSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    roomNumber: {
+    roomId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Room',
+        required: true
+    },
+    roomNumber: {
+        type: String,
         required: true
     },
     Date: {

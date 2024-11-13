@@ -1,4 +1,4 @@
-Aadhithyadevendran/Miniproject## Exam Slot Booking System
+## Exam Slot Booking System
 The Exam Slot Booking System is a web-based platform specifically designed to streamline and simplify the exam scheduling process at our college. It addresses the complexities of coordinating large student populations with diverse schedules, enhancing efficiency and reducing manual workload for both students and administrators.
 ## About
 Tailored Chatbot for Hostel Booking System is a project designed to integrate a chatbot that leverages advanced natural language processing techniques to understand and respond to user queries to the hostel booking system. Traditional hostel booking processes are often time-consuming and involve manual searches and extensive communication with hostel staff. This project seeks to overcome these challenges by creating an easy-to-use chatbot interface that assists students in addressing inquiries.

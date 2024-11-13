@@ -7,7 +7,7 @@ const router = express.Router();
 
 // authentication routes
 router.get("/user", protectRoute, getUser)
-router.post('/signup', signup);
+router.post("/signup", signup);
 router.post("/login", login);
 router.post("/logout", logout);
 

@@ -32,7 +32,7 @@ function App() {
 	  return (
 		<div>
 		  <Routes>
-			<Route path="/" element={authUser ? <StudentPage /> : <Navigate to="/login" />} />
+			<Route path="/" element={!authUser ? <LoginPage/> : authUser.role === "admin" ? <AdminPage/> :<StudentPage/>}/>
 			<Route path="/admin" element={authUser ? <AdminPage /> : <Navigate to="/login" />} />
 			<Route path='/login' element={!authUser ? <LoginPage /> : <Navigate to='/' />} />
 		  </Routes>

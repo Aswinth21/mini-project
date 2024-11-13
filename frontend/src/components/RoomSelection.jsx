@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-const RoomSelection = ({ onRoomSelect }) => {
+
+const RoomSelection = ({ exam , onRoomSelect}) => {
   const [rooms, setRooms] = useState([]);
 
   const getRoom = async () => {
@@ -16,15 +17,21 @@ const RoomSelection = ({ onRoomSelect }) => {
 
   useEffect(() => {
     getRoom();
-  }, []);
+    console.log(exam);
+  }, [exam]);
 
   return (
     <div>
       <h1>Select a Room</h1>
-      {rooms.map((room, index) => (
-        <button key={index} onClick={() => onRoomSelect({ roomId: room._id, roomNumber: room.roomNumber })}>
-          {room.roomNumber}
-        </button>
+      {rooms
+        .filter(room => room.roomType == exam)
+        .map((room, index) => (
+          <button 
+            key={index} 
+            onClick={() => onRoomSelect({ roomId: room._id, roomNumber: room.roomNumber })}
+          >
+            {room.roomNumber}
+          </button>
       ))}
     </div>
   );

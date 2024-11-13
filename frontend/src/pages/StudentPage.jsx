@@ -86,7 +86,7 @@ const StudentPage = () => {
         )}
         {!room.roomNumber && exam && (
           <div className="room-selection-container">
-            <RoomSelection onRoomSelect={setRoom} />
+            <RoomSelection onRoomSelect={setRoom} exam = {exam}/>
           </div>
         )}
         {exam && room.roomNumber && (

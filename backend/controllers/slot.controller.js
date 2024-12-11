@@ -65,3 +65,29 @@ export const getRooms = async (req, res) => {
         console.error(`error getting rooms: ${error.message}`);
     }
 }
+
+export const getSlots = async (req, res) => {
+    try{
+        const { userId } = req.params;
+        const slots = await SlotBooking.find({userId : userId})
+        if(slots){
+            res.status(200).json(slots);
+        }
+        else{
+            res.status(401).json({message: "No Bookings Found"});
+        }
+    }
+    catch(error) {
+        console.error(`error Booking slots: ${error.message}`);
+    }
+}
+
+export const getAllBookings = async (req, res) => {
+    try {
+        const bookings = await SlotBooking.find();
+        res.status(200).json(bookings);
+    }
+    catch (error) {
+        console.error(`error getting bookings: ${error.message}`);
+    }
+}

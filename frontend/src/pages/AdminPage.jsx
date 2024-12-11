@@ -19,6 +19,7 @@ const AdminPage = () => {
     setRoomCapacity(e.target.value);
   }
 
+
   const createRoom = async (e) => {
     e.preventDefault();
     const createdRoom = {

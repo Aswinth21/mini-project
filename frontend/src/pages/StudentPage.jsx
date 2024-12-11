@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SelectionComponent from "../components/SelectionComponent";
 import RoomSelection from "../components/RoomSelection";
 import DateComponent from "../components/DateComponent";
 import { useQuery } from "@tanstack/react-query";
 import "./styles/StudentPage.css";
+import BookingTable from "../components/BookingTable";
 
 const StudentPage = () => {
   const [exam, setExam] = useState("");
@@ -14,6 +15,23 @@ const StudentPage = () => {
   const [date, setDate] = useState("");
   const [slot, setSlot] = useState("");
   const { data: authUser } = useQuery({ queryKey: ["authUser"] });
+  const [bookings, setBookings] = useState("");
+
+  useEffect(() => {
+    getBookings();
+    console.log(bookings);
+  }, []);
+
+  const getBookings = async () => {
+    try {
+      const response = await fetch(`/api/v1/student/slots/${authUser._id}`);
+      const data = await response.json();
+      console.log(data);
+      setBookings(data);
+    } catch (error) {
+      console.error("Error fetching rooms:", error);
+    }
+  } 
 
   const bookSlot = async (e) => {
     e.preventDefault();
@@ -39,7 +57,7 @@ const StudentPage = () => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(bookingData),
-      });
+      }); 
       const data = await response.json();
       if (response.ok) {
         console.log("Booking successful:", data);
@@ -144,6 +162,35 @@ const StudentPage = () => {
             </button>
           </form>
         )}
+      </div>
+      <div>
+      <div>
+      <h1>Booking Details</h1>
+      <div>
+        <label>
+          Filter Date (yyyy-mm-dd):{" "}
+          <input
+            type="date"
+            value={filterDate}
+            onChange={(e) => setFilterDate(e.target.value)}
+          />
+        </label>
+        <label>
+          Filter Slot:{" "}
+          <input
+            type="text"
+            value={filterSlot}
+            onChange={(e) => setFilterSlot(e.target.value)}
+          />
+        </label>
+        <button onClick={handleFilter}>Apply Filter</button>
+      </div>
+      {filteredBookings.length > 0 ? (
+        <BookingTable bookings={filteredBookings} />
+      ) : (
+        <p>No bookings match the criteria.</p>
+      )}
+    </div>
       </div>
       <button className="form-button logout-button" onClick={logoutButton}>
         Logout

@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { MdOutlineMail, MdPassword } from "react-icons/md";

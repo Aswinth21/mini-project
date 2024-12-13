@@ -20,7 +20,7 @@ const StudentPage = () => {
   useEffect(() => {
     getBookings();
     console.log(bookings);
-  }, []);
+  },[]);
 
   const getBookings = async () => {
     try {
@@ -31,7 +31,7 @@ const StudentPage = () => {
     } catch (error) {
       console.error("Error fetching rooms:", error);
     }
-  } 
+  };
 
   const bookSlot = async (e) => {
     e.preventDefault();
@@ -57,7 +57,7 @@ const StudentPage = () => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(bookingData),
-      }); 
+      });
       const data = await response.json();
       if (response.ok) {
         console.log("Booking successful:", data);
@@ -93,10 +93,11 @@ const StudentPage = () => {
 
   return (
     <>
-      <h2 className="user-info">Username: {authUser?.name}</h2>
+      <h2 className="user-info">Name: {authUser?.name}</h2>
       <h2 className="user-info">Register Number: {authUser?.registerNumber}</h2>
       <div className="student-page-container">
-        <h1 className="student-page-title">Selected Exam: {exam}</h1>
+        <h1 className="student-page-title">Select the Mode of Exam {exam}</h1>
+        
         {!exam && (
           <div className="exam-mode-container">
             <SelectionComponent onExamChange={setExam} />
@@ -104,7 +105,7 @@ const StudentPage = () => {
         )}
         {!room.roomNumber && exam && (
           <div className="room-selection-container">
-            <RoomSelection onRoomSelect={setRoom} exam = {exam}/>
+            <RoomSelection onRoomSelect={setRoom} exam={exam} />
           </div>
         )}
         {exam && room.roomNumber && (
@@ -141,7 +142,9 @@ const StudentPage = () => {
               readOnly
             />
 
-            <DateComponent onDateChange={(date) => setDate(new Date(date).toISOString())} />
+            <DateComponent
+              onDateChange={(date) => setDate(new Date(date).toISOString())}
+            />
 
             <label className="form-label">Slot:</label>
             <select
@@ -157,40 +160,62 @@ const StudentPage = () => {
               ))}
             </select>
 
-            <button className="form-button book-button" onClick={bookSlot} type="submit">
+            <button
+              className="form-button book-button"
+              onClick={bookSlot}
+              type="submit"
+            >
               Book
             </button>
           </form>
         )}
+        {exam && (
+    <button
+      className="form-button back-button"
+      onClick={() => {
+        setExam("");
+        setRoom({ roomId: "", roomNumber: "" });
+        setCourseCode("");
+        setCourseName("");
+        setMacID("");
+        setDate("");
+        setSlot("");
+      }}
+    >
+      Back
+    </button>
+  )}
       </div>
       <div>
       <div>
-      <h1>Booking Details</h1>
-      <div>
-        <label>
-          Filter Date (yyyy-mm-dd):{" "}
-          <input
-            type="date"
-            value={filterDate}
-            onChange={(e) => setFilterDate(e.target.value)}
-          />
-        </label>
-        <label>
-          Filter Slot:{" "}
-          <input
-            type="text"
-            value={filterSlot}
-            onChange={(e) => setFilterSlot(e.target.value)}
-          />
-        </label>
-        <button onClick={handleFilter}>Apply Filter</button>
-      </div>
-      {filteredBookings.length > 0 ? (
-        <BookingTable bookings={filteredBookings} />
-      ) : (
-        <p>No bookings match the criteria.</p>
-      )}
-    </div>
+  
+  {!exam && (
+  <>
+  <h1
+    style={{
+      fontSize: '24px',
+      textAlign: 'center',
+      color: '#333',
+    }}
+  >
+    Your Bookings....
+  </h1>
+    {bookings.length > 0 ? (
+      <BookingTable bookings={bookings} />
+    ) : (
+      <p
+        style={{
+          fontSize: '18px',
+          textAlign: 'center',
+          color: '#777',
+        }}
+      >
+        No Booking Yet
+      </p>
+    )}
+  </>
+)}
+</div>
       </div>
       <button className="form-button logout-button" onClick={logoutButton}>
         Logout

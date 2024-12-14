@@ -1,5 +1,8 @@
 import { useState } from "react";
 import './styles/AdminPage.css';
+import OpenRoomComponent from "../components/AdminPageComponents/OpenRoomComponent";
+import CloseRoomComponent from "../components/AdminPageComponents/CloseRoomComponent";
+import SeeBookingsComponent from "../components/AdminPageComponents/SeeBookingsComponent";
 
 const AdminPage = () => {
 
@@ -92,6 +95,15 @@ const AdminPage = () => {
         <button className="submit-button" onClick={createRoom}>Create</button>
       </div>
     </form>
+    <div>
+      <CloseRoomComponent/>
+    </div>
+    <div>
+      <OpenRoomComponent/>
+    </div>
+    <div>
+      <SeeBookingsComponent/>
+    </div>
     <div>
       <button onClick={logoutButton}>
         Logout

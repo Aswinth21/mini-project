@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+
 const BookingTable = ({ bookings }) => {
   const slotTimings = {
     1: "08:00 - 10:00",
@@ -6,21 +7,6 @@ const BookingTable = ({ bookings }) => {
     3: "1:00 - 3:00",
     4: "3:00 - 5:00",
   };
-
-  const now = new Date();
-  const upcomingBookings = bookings.filter((booking) => {
-    const bookingDate = new Date(booking.Date);
-    const [hour, minute] = slotTimings[booking.slot].split(" - ")[0].split(":");
-    bookingDate.setHours(hour, minute, 0, 0);
-    return bookingDate >= now;
-  });
-
-  const completedBookings = bookings.filter((booking) => {
-    const bookingDate = new Date(booking.Date);
-    const [hour, minute] = slotTimings[booking.slot].split(" - ")[0].split(":");
-    bookingDate.setHours(hour, minute, 0, 0);
-    return bookingDate < now;
-  });
 
   return (
     <table>

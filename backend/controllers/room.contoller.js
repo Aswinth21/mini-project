@@ -26,28 +26,50 @@ export const editRoom = async (req, res) => {
 
 export const closeRoom = async (req, res) => {
     try {
-        const {roomId} = req.body;
-        const isRoom = await Room.findById(roomId);
-        if(isRoom){
-            const room = await Room.findByIdAndUpdate(roomId, {isClosed: true});
-            res.status(200).json(room);
-            console.log("success");
-        }
+        const { roomId } = req.params;
+        const room = await Room.findById(roomId);
         
-    }
-    catch (error) {
-        res.status(500).json({message: error.message});
-        console.log("error in closeRoom controller");
+        if (!room) {
+            return res.status(404).json({ message: 'Room not found' });
+        }
+
+        if (room.isClosed == true)
+            {
+                return res.status(404).json({ message: 'Room is already closed' });
+            }
+
+        room.isClosed = true;
+        await room.save();
+
+        res.status(200).json(room);
+        console.log("Room closed successfully.");
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+        console.log("Error in closeRoom controller:", error);
     }
 }
 
 export const openRoom = async (req, res) => {
     try {
-        const room = await Room.findByIdAndUpdate(req.params.id, {isClosed: false});
+        const { roomId } = req.params;
+        const room = await Room.findById(roomId);
+        
+        if (!room) {
+            return res.status(404).json({ message: 'Room not found' });
+        }
+
+        if (room.isClosed == false)
+        {
+            return res.status(404).json({ message: 'Room is already open' });
+        }
+
+        room.isClosed = false;
+        await room.save();
+
         res.status(200).json(room);
-    }
-    catch {
-        res.status(500).json({message: error.message});
-        console.log("error in openRoom controller");
+        console.log("Room opened successfully.");
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+        console.log("Error in openRoom controller:", error);
     }
 }

@@ -91,3 +91,37 @@ export const getAllBookings = async (req, res) => {
         console.error(`error getting bookings: ${error.message}`);
     }
 }
+
+export const getFilteredSlots = async (req, res) => {
+    try {
+        const { slot, roomNumber } = req.params;
+        console.log( slot, roomNumber);
+        const slots = await SlotBooking.find({ slot: slot, roomNumber: roomNumber})
+        if(slots){
+            res.status(200).json(slots);
+        }
+        else{
+            res.status(401).json({message: "No Bookings Found"});
+        }
+    }
+    catch (error) {
+        console.error(`error getting filtered slots: ${error.message}`);
+    }
+}
+
+export const getUserName = async (req, res) => {
+    try {
+        const { username } = req.params;
+        const user = await User.findOne({username : username});
+        
+        if (user) {
+          res.status(200).json({ name: user.name });
+        } else {
+          res.status(404).json({ message: "User Not Found" });
+        }
+        console.log(user.name);
+      } catch (error) {
+        console.error('Error fetching user name:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
+}

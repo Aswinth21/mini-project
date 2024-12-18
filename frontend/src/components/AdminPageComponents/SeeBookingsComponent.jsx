@@ -41,7 +41,6 @@ const SeeBookingsComponent = () => {
                     <RoomSelection onRoomSelect={setRoom} exam={exam} />
                     </div>
                 )}
-                <h2>Select Slot</h2>
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="slot">Select Slot:</label>

@@ -22,29 +22,18 @@ const BookingTable = ({ bookings }) => {
         </tr>
       </thead>
       <tbody>
-        {upcomingBookings.map((booking, index) => (
-          <tr key={`upcoming-${index}`} style={{ backgroundColor: "white", color: "black" }}>
+      {bookings.map((booking, index) => (
+          <tr key={index}>
             <td>{booking.courseName}</td>
             <td>{booking.courseCode}</td>
             <td>{booking.exam}</td>
             <td>{booking.macID}</td>
             <td>{new Date(booking.Date).toLocaleDateString()}</td>
-            <td>{slotTimings[booking.slot]}</td>
+            <td>{booking.slot}</td>
             <td>{booking.roomNumber}</td>
           </tr>
         ))}
-        {completedBookings.map((booking, index) => (
-          <tr key={`completed-${index}`} style={{ backgroundColor: "#81d4fa", color: "black" }}>
-            <td>{booking.courseName}</td>
-            <td>{booking.courseCode}</td>
-            <td>{booking.exam}</td>
-            <td>{booking.macID}</td>
-            <td>{new Date(booking.Date).toLocaleDateString()}</td>
-            <td>{slotTimings[booking.slot]}</td>
-            <td>{booking.roomNumber}</td>
-          </tr>
-        ))}
-      </tbody>
+      </tbody>
     </table>
   );
 };

@@ -1,56 +1,12 @@
 import { useState } from "react";
-import './styles/AdminPage.css';
+import CreateRoomComponent from "../components/AdminPageComponents/CreateRoomComponent";
 import OpenRoomComponent from "../components/AdminPageComponents/OpenRoomComponent";
 import CloseRoomComponent from "../components/AdminPageComponents/CloseRoomComponent";
 import SeeBookingsComponent from "../components/AdminPageComponents/SeeBookingsComponent";
+import './styles/AdminPage.css';
 
 const AdminPage = () => {
-
-  const [roomNumber, setRoomNumber] = useState("");
-  const [roomType, setRoomType] = useState("");
-  const [roomCapacity, setRoomCapacity] = useState("");
-
-  const handleRoomTypeChange = (e) => {
-    setRoomType(e.target.value);
-  }
-
-  const handleRoomNumberChange = (e) => {
-    setRoomNumber(e.target.value);
-  }
-
-  const handleRoomCapacityChange = (e) => {
-    setRoomCapacity(e.target.value);
-  }
-
-
-  const createRoom = async (e) => {
-    e.preventDefault();
-    const createdRoom = {
-      roomNumber,
-      roomType,
-      roomCapacity
-    };
-    try {
-      const token = localStorage.getItem("authToken");
-      const response = await fetch(`/api/v1/admin/create`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(createdRoom),
-      });
-      const data = await response.json();
-      console.log(data);
-      if (response.ok) {
-        console.log("Created successfully:", data);
-      } else {
-        console.error("Failed to create Room:", data.message || "Unknown error");
-      }
-    } catch (error) {
-      console.log(`error: ${error.message}`);
-    }
-  }
+  const [activeComponent, setActiveComponent] = useState("menu");
   const logoutButton = async () => {
     try {
       const res = await fetch("/api/v1/auth/logout", {
@@ -65,52 +21,68 @@ const AdminPage = () => {
     }
   };
 
+
+  const renderComponent = () => {
+    switch (activeComponent) {
+      case "createRoom":
+        return <CreateRoomComponent />;
+      case "openRoom":
+        return <OpenRoomComponent />;
+      case "closeRoom":
+        return <CloseRoomComponent />;
+      case "seeBookings":
+        return <SeeBookingsComponent />;
+      default:
+        return (
+          <div className="admin-menu">
+            <h2>Select an option:</h2>
+            <ul>
+              <li>
+                <button onClick={() => setActiveComponent("createRoom")}>
+                  Create Room
+                </button>
+              </li>
+              <li>
+                <button onClick={() => setActiveComponent("openRoom")}>
+                  Open Room
+                </button>
+              </li>
+              <li>
+                <button onClick={() => setActiveComponent("closeRoom")}>
+                  Close Room
+                </button>
+              </li>
+              <li>
+                <button onClick={() => setActiveComponent("seeBookings")}>
+                  See Bookings
+                </button>
+              </li>
+            </ul>
+            
+          </div>
+        );
+    }
+  };
+
   return (
     <>
-    <form className="admin-form">
-      <div className="form-group">
-        <input
-          type="text"
-          className="input-field"
-          placeholder="Enter Room Number"
-          onChange={handleRoomNumberChange}
-        />
-      </div>
-      <div className="form-group">
-        <select className="select-field" onChange={handleRoomTypeChange}>
-          <option value="null">Select Type of Exam</option>
-          <option value="CIA">CIA</option>
-          <option value="Module">Module</option>
-        </select>
-      </div>
-      <div className="form-group">
-        <input
-          type="text"
-          className="input-field"
-          placeholder="Room Capacity"
-          onChange={handleRoomCapacityChange}
-        />
-      </div>
-      <div className="form-group">
-        <button className="submit-button" onClick={createRoom}>Create</button>
-      </div>
-    </form>
-    <div>
-      <CloseRoomComponent/>
-    </div>
-    <div>
-      <OpenRoomComponent/>
-    </div>
-    <div>
-      <SeeBookingsComponent/>
-    </div>
-    <div>
-      <button onClick={logoutButton}>
+    <button className="form-button logout-button" onClick={logoutButton}>
         Logout
       </button>
+    <div className="admin-page-container">
+      <h1>Admin Dashboard</h1>
+      <div className="admin-content">{renderComponent()}</div>
+      {activeComponent !== "menu" && (
+        <button
+          className="back-button"
+          onClick={() => setActiveComponent("menu")}
+        >
+          Back to Menu
+        </button>
+      )}
     </div>
     </>
-  )
-}
+  );
+};
 
 export default AdminPage;

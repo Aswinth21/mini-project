@@ -18,9 +18,8 @@ table {
   color: black; /* Set table text color to black */
 }
 
-/* Style the table header */
 thead {
-  background-color: #b3e5fc;  /* Lighter blue for table header */
+  background-color: #b3e5fc; 
 }
 
 th, td {

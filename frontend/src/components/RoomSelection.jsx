@@ -24,7 +24,7 @@ const RoomSelection = ({ exam , onRoomSelect}) => {
     <div>
       <h1>Select a Room</h1>
       {rooms
-        .filter(room => room.roomType == exam)
+        .filter(room => (room.roomType == exam) && (room.isClosed==false))
         .map((room, index) => (
           <button 
             key={index} 

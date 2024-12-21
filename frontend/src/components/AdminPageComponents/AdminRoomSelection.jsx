@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const RoomSelection = ({ exam, onRoomSelect, roomFilter }) => {
+const AdminRoomSelection = ({ exam, onRoomSelect, roomFilter }) => {
   const [rooms, setRooms] = useState([]);
   const getRoom = async () => {
     try {
@@ -22,7 +22,7 @@ const RoomSelection = ({ exam, onRoomSelect, roomFilter }) => {
     <div>
       <h1>Select a Room</h1>
       {rooms
-        .filter(room => room.roomType === exam) // Apply the roomFilter prop
+        .filter(room => room.roomType === exam && roomFilter(room)) // Apply the roomFilter prop
         .map((room, index) => (
           <button 
             key={index} 
@@ -35,4 +35,4 @@ const RoomSelection = ({ exam, onRoomSelect, roomFilter }) => {
   );
 };
 
-export default RoomSelection;
+export default AdminRoomSelection;

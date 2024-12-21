@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import RoomSelection from '../RoomSelection';
+import AdminRoomSelection from './AdminRoomSelection';
 import SelectionComponent from '../SelectionComponent';
 
 const OpenRoomComponent = () => {
@@ -49,7 +49,7 @@ const OpenRoomComponent = () => {
 
       {exam && !room.roomNumber &&(
         <div className="room-selection-container">
-          <RoomSelection onRoomSelect={setRoom} exam={exam} />
+          <AdminRoomSelection onRoomSelect={setRoom} exam={exam} roomFilter = {(room) => room.isClosed}/>
         </div>
       )}
 

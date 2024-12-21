@@ -9,8 +9,8 @@ const SelectionComponent = ({ onExamChange }) => {
   };
 
   const moduleExam = () => {
-    setExam("module");
-    onExamChange("module");
+    setExam("Module");
+    onExamChange("Module");
   };
 
   return (
